@@ -19,7 +19,6 @@ function init() {
    });
 
    let form = document.querySelector("form");
-   form.setAttribute("action", "#");
 
    form.addEventListener("submit", function(event) {
       let pilotInput = document.querySelector("input[name=pilotName]");
@@ -27,15 +26,12 @@ function init() {
       let fuelInput = document.querySelector("input[name=fuelLevel]");
       let massInput = document.querySelector("input[name=cargoMass]");
       let inputArray = [pilotInput, copilotInput, fuelInput, massInput];
-      for (let input of inputArray) {
-         if (input.value === "") {
-            alert("All fields are required!");
-            event.preventDefault();
-            break;
-         }
-      };
-      if (isNaN(fuelInput.value.toString()) || isNaN(massInput.value.toString())) {
+      debugger;
+      if (isNaN(fuelInput.value) || isNaN(massInput.value)) {
          alert("Fuel Level and Cargo Mass must be numbers!");
+         event.preventDefault();
+      } else if (pilotInput.value === "" || copilotInput.value === "" || fuelInput.value === "" || massInput.value === "") {
+         alert("All fields are required!");
          event.preventDefault();
       } else {
          let launchStatus = document.getElementById("launchStatusCheck");
@@ -44,8 +40,8 @@ function init() {
          ${fuelInput.value < 10000 || massInput.value > 10000 ? `<h2 id="launchStatus" style="color: red">Shuttle not ready for launch</h2>` : `<h2 id="launchStatus" style="color: green">Shuttle is ready for launch</h2>`}
          <div>
          <ol>
-         <li id="pilotStatus">${pilotInput.value} is ready for launch</li>
-         <li id="pilotStatus">${copilotInput.value} is ready for launch</li>
+         <li id="pilotStatus">Pilot ${pilotInput.value} is ready for launch</li>
+         <li id="pilotStatus">Co-pilot ${copilotInput.value} is ready for launch</li>
          ${fuelInput.value < 10000 ? `<li id="fuelStatus">Fuel level too low for launch</li>` : `<li id="fuelStatus">Fuel level high enough for launch</li>`}
          ${massInput.value > 10000 ? `<li id="cargoStatus">Cargo mass too high for launch</li>` : `<li id="cargoStatus">Cargo mass low enough for launch</li>`}
          </ol>
